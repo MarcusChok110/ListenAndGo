@@ -13,5 +13,14 @@ namespace ListenAndGoAPI.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Playlist>()
+                .Property(playlist => playlist.DateCreated)
+                .HasDefaultValueSql("now()");
+        }
     }
 }
