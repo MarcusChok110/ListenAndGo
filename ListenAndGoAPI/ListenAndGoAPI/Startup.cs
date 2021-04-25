@@ -2,10 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using ListenAndGoAPI.Data;
+using ListenAndGoAPI.Extensions;
+using ListenAndGoAPI.Models.Auth;
+using ListenAndGoAPI.Resources;
+using ListenAndGoAPI.Services;
+using ListenAndGoAPI.Services.Interfaces;
+using ListenAndGoAPI.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,20 +26,81 @@ namespace ListenAndGoAPI
 {
     public class Startup
     {
+        private const string CorsPolicy = "ListenAndGoCorsPolicy";
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy(CorsPolicy, builder =>
+            {
+                builder
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
+
+            services.AddAutoMapper(expression => { expression.AddProfile<MappingProfile>(); }, typeof(Startup));
+
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>()
+                .AddAuthorization()
+                .AddFiltering()
+                .AddSorting()
+                .AddProjections();
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddScoped<IPlaylistService, PlaylistService>();
+            services.AddScoped<ISongService, SongService>();
+            services.AddScoped<IJwtService, JwtService>();
+
+            services.AddAuth(Configuration.GetSection("Jwt").Get<JwtSettings>());
+
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ListenAndGoAPI", Version = "v1"});
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT containing userid claim",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            },
+                            UnresolvedReference = true
+                        },
+                        new List<string>()
+                    }
+                });
             });
         }
 
@@ -43,13 +114,19 @@ namespace ListenAndGoAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ListenAndGoAPI v1"));
             }
 
+            app.UseCors(CorsPolicy);
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuth();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapGraphQL();
+            });
         }
     }
 }
