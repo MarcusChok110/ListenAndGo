@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>Application</mat-toolbar>
+    <mat-nav-list *ngFor="let route of routes">
+      <a mat-list-item [routerLink]="route.path">{{ route.title }}</a>
+    </mat-nav-list>
+    <mat-divider></mat-divider>
+    <mat-toolbar>Playlists</mat-toolbar>
+    <mat-nav-list>
+      <cdk-virtual-scroll-viewport itemSize="48" class="playlist-viewport">
+        <div *cdkVirtualFor="let item of playlistService.items">
+          <mat-list-item>
+            <a class="playlist-item">{{ item }}</a>
+          </mat-list-item>
+        </div>
+      </cdk-virtual-scroll-viewport>
+      <a mat-list-item>
+        <mat-icon mat-list-icon>add</mat-icon>
+        Add Playlist
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header [isHandset$]="isHandset$" [drawer]="drawer"></app-header>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
