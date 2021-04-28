@@ -8,6 +8,12 @@ import { LayoutModule } from './layout/layout.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
+import { environment } from '../environments/environment';
+import { PlaylistModule } from './playlist/playlist.module';
+import { SearchModule } from './search/search.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,8 +25,21 @@ import { SharedModule } from './shared/shared.module';
     AuthModule,
     CoreModule,
     SharedModule,
+    PlaylistModule,
+    SearchModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({ uri: `${environment.apiUrl}/graphql` }),
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
