@@ -1,1 +1,66 @@
-<app-form></app-form>
+<form [formGroup]="authForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Username" formControlName="username" />
+            <mat-error
+              *ngIf="authForm.controls['username'].hasError('required')"
+            >
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+            <mat-error
+              *ngIf="authForm.controls['password'].hasError('required')"
+            >
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="authForm.invalid"
+      >
+        Submit
+      </button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <div class="redirect-button">
+        <a
+          mat-button
+          color="accent"
+          [routerLink]="['/login']"
+          *ngIf="authType == 'register'"
+          >Have an account? Log in!
+        </a>
+        <a
+          mat-button
+          color="accent"
+          [routerLink]="['/register']"
+          *ngIf="authType == 'login'"
+          >Need an account? Register!
+        </a>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</form>
