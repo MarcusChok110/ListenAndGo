@@ -13,14 +13,14 @@
   <span class="spacer"></span>
   <button
     mat-icon-button
-    *ngIf="userService.isLoggedIn"
+    *ngIf="userService.isLoggedIn$ | async"
     [matMenuTriggerFor]="loggedInMenu"
   >
     <mat-icon>account_circle</mat-icon>
   </button>
   <button
     mat-icon-button
-    *ngIf="!userService.isLoggedIn"
+    *ngIf="!(userService.isLoggedIn$ | async)"
     [matMenuTriggerFor]="loggedOutMenu"
   >
     <mat-icon>account_circle</mat-icon>
@@ -28,7 +28,9 @@
 </mat-toolbar>
 
 <mat-menu #loggedInMenu="matMenu">
-  <button mat-menu-item (click)="profile()">Profile</button>
+  <button mat-menu-item class="menu-item-user">
+    Hi, {{ userService.user?.userName }}!
+  </button>
   <button mat-menu-item (click)="logout()">Log Out</button>
 </mat-menu>
 

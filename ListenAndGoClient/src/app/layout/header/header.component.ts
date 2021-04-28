@@ -3,6 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { UserService } from '../../core/services/user.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,11 @@ export class HeaderComponent implements OnInit {
 
   public title: string;
 
-  constructor(public userService: UserService, public router: Router) {
+  constructor(
+    public userService: UserService,
+    public router: Router,
+    private snackbarService: MatSnackBar
+  ) {
     this.title = 'Listen And Go';
   }
 
@@ -28,12 +33,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    // TODO
+    this.userService.clearSession();
+    this.snackbarService.open('Logged out successfully', 'Close', {
+      duration: 3000,
+    });
     this.router.navigateByUrl('');
-  }
-
-  profile(): void {
-    this.router.navigateByUrl('/profile');
   }
 
   ngOnInit(): void {}
