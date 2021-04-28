@@ -7,14 +7,10 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JwtService } from '../services/jwt.service';
-import { UserService } from '../services/user.service';
 
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
-  constructor(
-    private jwtService: JwtService,
-    private userService: UserService
-  ) {}
+  constructor(private jwtService: JwtService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -22,7 +18,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = this.jwtService.getToken();
 
-    if (token && this.userService.isLoggedIn) {
+    if (token) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
