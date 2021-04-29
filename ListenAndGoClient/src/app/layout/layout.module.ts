@@ -13,6 +13,9 @@ import { HeaderComponent } from './header/header.component';
 import { CoreModule } from '../core/core.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '../shared/shared.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PlaylistModule } from '../playlist/playlist.module';
 
 @NgModule({
   declarations: [SidenavComponent, LayoutComponent, HeaderComponent],
@@ -28,6 +31,9 @@ import { SharedModule } from '../shared/shared.module';
     CoreModule,
     MatMenuModule,
     SharedModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    PlaylistModule,
   ],
   exports: [LayoutComponent],
 })
