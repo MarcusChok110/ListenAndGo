@@ -3,7 +3,7 @@ import { User } from './user.model';
 
 export interface Song {
   id: number;
-  releaseDate: Date;
+  releaseDate: string;
   name: string;
   artist: string;
   type: SongType;
