@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../core/services/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +21,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     public userService: UserService,
     public router: Router,
-    private snackbarService: MatSnackBar
+    private snackbarService: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.title = 'Listen And Go';
   }
@@ -33,11 +36,20 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.userService.clearSession();
-    this.snackbarService.open('Logged out successfully', 'Close', {
-      duration: 3000,
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: 'Are you sure you want to log out?',
     });
-    this.router.navigateByUrl('');
+
+    dialogRef.afterClosed().subscribe((value) => {
+      if (value) {
+        this.userService.clearSession();
+        this.snackbarService.open('Logged out successfully', 'Close', {
+          duration: 3000,
+        });
+        this.router.navigateByUrl('');
+      }
+    });
   }
 
   ngOnInit(): void {}
