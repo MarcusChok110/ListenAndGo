@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>Customize Playlist</h1>
+<div mat-dialog-content class="full-width">
+  <form [formGroup]="playlistForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Name" formControlName="name" />
+          <mat-error *ngIf="playlistForm.controls['name'].hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-slide-toggle formControlName="isPublic">
+            Public? (Currently set to:
+            <strong>
+              {{ playlistForm.value["isPublic"] ? "Public" : "Private" }})
+            </strong>
+          </mat-slide-toggle>
+          <!-- To allow use of form field with slide toggle -->
+          <textarea matInput hidden></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <textarea
+            matInput
+            placeholder="Description"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    (click)="onSave()"
+    [disabled]="playlistForm.invalid"
+    color="primary"
+  >
+    Save
+  </button>
+</div>
