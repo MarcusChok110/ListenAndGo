@@ -39,10 +39,6 @@ function GET_USER_PLAYLISTS(userId: number): DocumentNode {
         dateCreated
         isPublic
         userId
-        user {
-          id
-          userName
-        }
         songs {
           id
           releaseDate
@@ -51,10 +47,6 @@ function GET_USER_PLAYLISTS(userId: number): DocumentNode {
           type
           path
           userId
-          user {
-            id
-            userName
-          }
         }
       }
     }
