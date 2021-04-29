@@ -2,12 +2,12 @@ import { User } from './user.model';
 import { Song } from './song.model';
 
 export interface Playlist {
-  id: number;
+  id?: number;
   name: string;
   description: string;
-  dateCreated: Date;
+  dateCreated?: string;
   isPublic: boolean;
-  userId: number;
-  user: User;
+  userId?: number;
+  user?: User;
   songs: Song[];
 }
