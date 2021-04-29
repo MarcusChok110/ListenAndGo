@@ -1,0 +1,24 @@
+<mat-card class="playlist-card" *ngIf="playlist">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>
+      <span *ngIf="playlist.isPublic" matTooltip="Public">lock_open</span>
+      <span *ngIf="!playlist.isPublic" matTooltip="Private">lock</span>
+    </mat-icon>
+    <mat-card-title>
+      {{ playlist.name }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      Created {{ playlist.dateCreated | date: "medium" }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="playlist-description">
+      {{ playlist.description }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="playlist-actions">
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="onEdit()">EDIT</button>
+    <button mat-raised-button color="warn" (click)="onDelete()">DELETE</button>
+  </mat-card-actions>
+</mat-card>

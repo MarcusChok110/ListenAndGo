@@ -8,24 +8,31 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-toolbar>Application</mat-toolbar>
-    <mat-nav-list *ngFor="let route of routes">
-      <a mat-list-item [routerLink]="route.path">{{ route.title }}</a>
-    </mat-nav-list>
-    <mat-divider></mat-divider>
-    <mat-toolbar>Playlists</mat-toolbar>
     <mat-nav-list>
-      <cdk-virtual-scroll-viewport itemSize="48" class="playlist-viewport">
-        <div *cdkVirtualFor="let item of playlistService.items">
-          <mat-list-item>
-            <a class="playlist-item">{{ item }}</a>
-          </mat-list-item>
-        </div>
-      </cdk-virtual-scroll-viewport>
-      <a mat-list-item>
-        <mat-icon mat-list-icon>add</mat-icon>
-        Add Playlist
+      <a mat-list-item *ngFor="let route of routes" [routerLink]="route.path">
+        <mat-icon mat-list-icon>{{ route.icon }}</mat-icon>
+        {{ route.title }}
       </a>
     </mat-nav-list>
+    <div *ngIf="userService.isLoggedIn$ | async">
+      <mat-divider></mat-divider>
+      <mat-toolbar>Playlists</mat-toolbar>
+      <mat-nav-list>
+        <cdk-virtual-scroll-viewport itemSize="48" class="playlist-viewport">
+          <div *cdkVirtualFor="let item of playlistService.playlists$ | async">
+            <a mat-list-item routerLink="/playlist/{{ item.id }}">
+              <span class="playlist-item">
+                {{ item.name }}
+              </span>
+            </a>
+          </div>
+        </cdk-virtual-scroll-viewport>
+        <a mat-list-item (click)="openPlaylistDialog()">
+          <mat-icon mat-list-icon>add</mat-icon>
+          Add Playlist
+        </a>
+      </mat-nav-list>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header [isHandset$]="isHandset$" [drawer]="drawer"></app-header>

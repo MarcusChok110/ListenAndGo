@@ -4,6 +4,7 @@ using AutoMapper;
 using ListenAndGoAPI.Models.Auth;
 using ListenAndGoAPI.Resources.DTOs;
 using ListenAndGoAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +48,7 @@ namespace ListenAndGoAPI.Controllers
             var userSignInResult = await _userManager.CheckPasswordAsync(user, userAuthDto.Password);
 
             return userSignInResult
-                ? Ok(_jwtService.GenerateJwt(user, await _userManager.GetRolesAsync(user)))
+                ? Ok(new {jwtToken = _jwtService.GenerateJwt(user, await _userManager.GetRolesAsync(user))})
                 : BadRequest("Username or password incorrect");
         }
 
@@ -75,10 +76,12 @@ namespace ListenAndGoAPI.Controllers
                 : Problem(result.Errors.First().Description, null, 500);
         }
 
+        [Authorize]
         [HttpGet("Ping")]
-        public ActionResult Ping()
+        public async Task<ActionResult> Ping()
         {
-            return Ok("You are authorized with a JWT.");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return Ok(user);
         }
     }
 }

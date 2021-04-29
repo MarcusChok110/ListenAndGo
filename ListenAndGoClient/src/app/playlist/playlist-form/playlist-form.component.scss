@@ -2,16 +2,6 @@
   width: 100%;
 }
 
-.shipping-card {
-  min-width: 120px;
-  margin: 2em 2em;
-}
-
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
-}
-
 .row {
   display: flex;
   flex-direction: row;
@@ -24,8 +14,4 @@
 
 .col:last-child {
   margin-right: 0;
-}
-
-.redirect-button {
-  float: right;
 }
