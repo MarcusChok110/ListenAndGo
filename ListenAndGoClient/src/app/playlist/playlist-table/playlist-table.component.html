@@ -1,0 +1,21 @@
+<mat-list>
+  <div mat-subheader>Songs</div>
+  <div *ngIf="songs && songs.length > 0; else noSongs">
+    <cdk-virtual-scroll-viewport itemSize="50" class="songs-viewport">
+      <div *cdkVirtualFor="let song of songs">
+        <mat-list-item>
+          <mat-icon mat-list-icon>library_music</mat-icon>
+          <div mat-line>{{ song.name }}</div>
+          <div mat-line>{{ song.artist }}</div>
+        </mat-list-item>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+  <!-- Message for when playlist has no songs -->
+  <ng-template #noSongs>
+    <mat-list-item>
+      <mat-icon mat-list-icon>error_outline</mat-icon>
+      <div mat-line>This playlist does not have any songs!</div>
+    </mat-list-item>
+  </ng-template>
+</mat-list>
