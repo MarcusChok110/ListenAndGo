@@ -1,0 +1,3 @@
+<app-playlist-card [playlist]="playlist$ | async"></app-playlist-card>
+<app-playlist-table [songs]="(playlist$ | async)?.songs"></app-playlist-table>
+<pre>{{ playlist$ | async | json }}</pre>
