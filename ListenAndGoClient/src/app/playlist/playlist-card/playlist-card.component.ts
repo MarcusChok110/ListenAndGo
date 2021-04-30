@@ -3,6 +3,8 @@ import { Playlist } from '../../core/models/playlist.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PlaylistFormComponent } from '../playlist-form/playlist-form.component';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { PlaylistService } from '../../core/services/playlist.service';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-playlist-card',
@@ -12,7 +14,11 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 export class PlaylistCardComponent implements OnInit {
   @Input() playlist: Playlist | null = null;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private playlistService: PlaylistService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -23,7 +29,10 @@ export class PlaylistCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((value) => {
-      console.log(value);
+      const userId = this.userService.user?.id;
+      if (value && userId) {
+        this.playlistService.updatePlaylist(userId, value);
+      }
     });
   }
 
@@ -34,7 +43,12 @@ export class PlaylistCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((value) => {
-      console.log(value);
+      const userId = this.userService.user?.id;
+      const playlistId = this.playlist?.id;
+
+      if (value && userId && playlistId) {
+        this.playlistService.deletePlaylist(userId, playlistId);
+      }
     });
   }
 }
