@@ -1,3 +1,11 @@
-<app-playlist-card [playlist]="playlist$ | async"></app-playlist-card>
-<app-playlist-table [songs]="(playlist$ | async)?.songs"></app-playlist-table>
-<pre>{{ playlist$ | async | json }}</pre>
+<div *ngIf="playlist$ | async; else notFound">
+  <app-playlist-card [playlist]="playlist$ | async"></app-playlist-card>
+  <app-playlist-table [songs]="(playlist$ | async)?.songs"></app-playlist-table>
+  <pre>{{ playlist$ | async | json }}</pre>
+</div>
+
+<ng-template #notFound>
+  <div class="title-container">
+    <h1>Playlist not found</h1>
+  </div>
+</ng-template>
