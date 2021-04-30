@@ -51,7 +51,7 @@ namespace ListenAndGoAPI
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
@@ -65,9 +65,12 @@ namespace ListenAndGoAPI
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddHttpClient();
+            
             services.AddScoped<IPlaylistService, PlaylistService>();
             services.AddScoped<ISongService, SongService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IYoutubeService, YoutubeService>();
 
             services.AddAuth(Configuration.GetSection("Jwt").Get<JwtSettings>());
 
