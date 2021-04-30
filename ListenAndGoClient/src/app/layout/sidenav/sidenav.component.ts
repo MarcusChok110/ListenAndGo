@@ -26,6 +26,10 @@ export class SidenavComponent {
       data: {},
     });
 
-    dialogRef.afterClosed().subscribe((value) => console.log(value));
+    dialogRef.afterClosed().subscribe((value) => {
+      if (value && this.userService.user?.id) {
+        this.playlistService.addPlaylist(this.userService.user?.id, value);
+      }
+    });
   }
 }
