@@ -5,7 +5,7 @@ export interface Playlist {
   id?: number;
   name: string;
   description: string;
-  dateCreated?: string;
+  dateCreated: string;
   isPublic: boolean;
   userId?: number;
   user?: User;
