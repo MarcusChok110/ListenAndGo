@@ -1,4 +1,4 @@
-<mat-list>
+<mat-nav-list>
   <div mat-subheader>Songs</div>
   <div *ngIf="songs && songs.length > 0; else noSongs">
     <cdk-virtual-scroll-viewport itemSize="50" class="songs-viewport">
@@ -13,9 +13,10 @@
   </div>
   <!-- Message for when playlist has no songs -->
   <ng-template #noSongs>
-    <mat-list-item>
+    <mat-list-item routerLink="/search">
       <mat-icon mat-list-icon>error_outline</mat-icon>
       <div mat-line>This playlist does not have any songs!</div>
+      <div mat-line>Click here to search for songs to add this playlist!</div>
     </mat-list-item>
   </ng-template>
-</mat-list>
+</mat-nav-list>
