@@ -14,6 +14,7 @@ import { InMemoryCache } from '@apollo/client/core';
 import { environment } from '../environments/environment';
 import { PlaylistModule } from './playlist/playlist.module';
 import { SearchModule } from './search/search.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { SearchModule } from './search/search.module';
     SharedModule,
     PlaylistModule,
     SearchModule,
+    HomeModule,
   ],
   providers: [
     {
