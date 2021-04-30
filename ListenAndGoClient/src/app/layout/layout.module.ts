@@ -16,9 +16,10 @@ import { SharedModule } from '../shared/shared.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlaylistModule } from '../playlist/playlist.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [SidenavComponent, LayoutComponent, HeaderComponent],
+  declarations: [SidenavComponent, LayoutComponent, HeaderComponent, FooterComponent],
   imports: [
     CDKLayoutModule,
     MatToolbarModule,
