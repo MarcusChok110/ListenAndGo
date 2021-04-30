@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~11.2.6",
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
+    "@angular/youtube-player": "^11.2.11",
     "@apollo/client": "^3.3.15",
     "apollo-angular": "^2.4.0",
     "graphql": "^15.5.0",
