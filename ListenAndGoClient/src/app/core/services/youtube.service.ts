@@ -4,9 +4,7 @@ import { YoutubeQueryResponse } from '../models/youtube-query.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class YoutubeService {
   private readonly apiRoute = 'api/Youtube';
   public searchResults$?: Observable<YoutubeQueryResponse>;

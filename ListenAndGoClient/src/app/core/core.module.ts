@@ -7,6 +7,8 @@ import { JwtService } from './services/jwt.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './interceptors/http-token.interceptor';
 import { AuthGuard } from './services/auth.guard';
+import { SongService } from './services/song.service';
+import { YoutubeService } from './services/youtube.service';
 
 @NgModule({
   declarations: [],
@@ -18,6 +20,8 @@ import { AuthGuard } from './services/auth.guard';
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
     AuthGuard,
+    SongService,
+    YoutubeService,
   ],
 })
 export class CoreModule {}
