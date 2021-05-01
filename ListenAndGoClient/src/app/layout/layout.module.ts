@@ -17,9 +17,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlaylistModule } from '../playlist/playlist.module';
 import { FooterComponent } from './footer/footer.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
-  declarations: [SidenavComponent, LayoutComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    SidenavComponent,
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+  ],
   imports: [
     CDKLayoutModule,
     MatToolbarModule,
@@ -35,6 +41,7 @@ import { FooterComponent } from './footer/footer.component';
     MatSnackBarModule,
     MatDialogModule,
     PlaylistModule,
+    MatSliderModule,
   ],
   exports: [LayoutComponent],
 })
