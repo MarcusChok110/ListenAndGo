@@ -83,6 +83,9 @@ export class AuthComponent implements OnInit {
     action: string = 'Close',
     duration: number = 3000
   ): MatSnackBarRef<TextOnlySnackBar> {
-    return this.snackbarService.open(message, action, { duration });
+    return this.snackbarService.open(message, action, {
+      duration,
+      horizontalPosition: 'start',
+    });
   }
 }

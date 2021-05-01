@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
         this.userService.clearSession();
         this.snackbarService.open('Logged out successfully', 'Close', {
           duration: 3000,
+          horizontalPosition: 'start',
         });
         this.router.navigateByUrl('');
       }

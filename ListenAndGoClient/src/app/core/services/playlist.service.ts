@@ -30,6 +30,7 @@ export class PlaylistService {
       if (reloadMessage) {
         this.snackBar.open(reloadMessage, 'CLOSE', {
           duration: this.snackbarDuration,
+          horizontalPosition: 'start',
         });
       }
       return;
@@ -58,6 +59,7 @@ export class PlaylistService {
         }
         this.snackBar.open('Playlist could not be created', 'CLOSE', {
           duration: this.snackbarDuration,
+          horizontalPosition: 'start',
         });
       });
   }
@@ -79,6 +81,7 @@ export class PlaylistService {
         }
         this.snackBar.open('Playlist could not be deleted', 'CLOSE', {
           duration: this.snackbarDuration,
+          horizontalPosition: 'start',
         });
       });
   }
@@ -95,6 +98,7 @@ export class PlaylistService {
         }
         this.snackBar.open('Playlist could not be updated', 'CLOSE', {
           duration: this.snackbarDuration,
+          horizontalPosition: 'start',
         });
       });
   }
