@@ -37,5 +37,8 @@
   <mat-sidenav-content>
     <app-header [isHandset$]="isHandset$" [drawer]="drawer"></app-header>
     <ng-content></ng-content>
+    <!-- Extra space so that footer does not cover content at bottom -->
+    <div style="margin-bottom: 9em"></div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<app-footer></app-footer>
