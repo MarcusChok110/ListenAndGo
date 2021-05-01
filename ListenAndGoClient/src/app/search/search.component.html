@@ -1,1 +1,36 @@
-<p>search works!</p>
+<!-- Search bar -->
+<form class="search-form" (submit)="onSubmit()">
+  <mat-form-field class="search-bar" appearance="standard">
+    <mat-label>Search</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [(ngModel)]="query" name="query" />
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="onReset()"
+      [disabled]="query.length == 0"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="query.length == 0"
+    >
+      Search
+    </button>
+  </div>
+</form>
+<!-- tabs displaying data from each tab -->
+<mat-tab-group [(selectedIndex)]="selected">
+  <mat-tab label="Youtube">
+    <app-search-youtube
+      [searchResults$]="youtubeService.searchResults$"
+    ></app-search-youtube>
+  </mat-tab>
+  <mat-tab label="Soundcloud"></mat-tab>
+</mat-tab-group>
