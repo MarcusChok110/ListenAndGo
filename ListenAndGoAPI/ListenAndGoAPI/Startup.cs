@@ -65,12 +65,11 @@ namespace ListenAndGoAPI
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddHttpClient();
+            services.AddHttpClient<YoutubeService>();
             
             services.AddScoped<IPlaylistService, PlaylistService>();
             services.AddScoped<ISongService, SongService>();
             services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IYoutubeService, YoutubeService>();
 
             services.AddAuth(Configuration.GetSection("Jwt").Get<JwtSettings>());
 
