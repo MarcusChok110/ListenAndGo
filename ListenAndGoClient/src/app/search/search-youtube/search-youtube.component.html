@@ -1,0 +1,7 @@
+<div *ngIf="searchResults$ | async; let searchResults; else: noResults">
+  <pre>
+    {{ searchResults | json }}
+  </pre>
+</div>
+
+<ng-template #noResults>No search results</ng-template>
