@@ -1,16 +1,29 @@
-<!-- Bottom margin so that footer doesn't cover content -->
-<div style="margin-bottom: 6em"></div>
 <mat-toolbar class="player-footer">
-  <button mat-icon-button>
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="spacer"></span>
-  <span>My App</span>
-  <span class="spacer"></span>
-  <button mat-icon-button>
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button>
-    <mat-icon>share</mat-icon>
-  </button>
+  <mat-toolbar-row class="player-progress-container">
+    <mat-slider
+      class="player-progress-bar"
+      min="0"
+      max="100"
+      step="0.5"
+    ></mat-slider>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <!-- Empty button to push element to the middle -->
+    <button mat-icon-button></button>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+    <button mat-mini-fab color="basic" (click)="onTogglePlay()">
+      <mat-icon *ngIf="songService.isPlaying">pause</mat-icon>
+      <mat-icon *ngIf="!songService.isPlaying">play_arrow</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>skip_next</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon>queue_music</mat-icon>
+    </button>
+  </mat-toolbar-row>
 </mat-toolbar>
