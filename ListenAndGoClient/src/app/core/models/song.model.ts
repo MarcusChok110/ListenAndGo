@@ -11,6 +11,7 @@ export interface Song {
   playlists: Playlist[];
   userId: number;
   user: User;
+  imgUrl?: string;
 }
 
 export type SongType = 'YOUTUBE' | 'SPOTIFY' | 'LOCAL';
