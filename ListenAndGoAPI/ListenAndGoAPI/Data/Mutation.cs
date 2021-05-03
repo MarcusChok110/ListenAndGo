@@ -86,5 +86,21 @@ namespace ListenAndGoAPI.Data
 
             return new DeletePlaylistPayload(success);
         }
+
+        // Playlists <-> Song Mutations
+
+        public async Task<UpdatePlaylistPayload> AddSongToPlaylistAsync
+            (int playlistId, AddSongInput songInput, [Service] IPlaylistService playlistService)
+        {
+            var success = await playlistService.AddSongAsync(playlistId, songInput);
+            return new UpdatePlaylistPayload(success);
+        }
+
+        public async Task<UpdatePlaylistPayload> RemoveSongFromPlaylistAsync
+        (int playlistId, int songId, [Service] IPlaylistService playlistService)
+        {
+            var success = await playlistService.RemoveSongAsync(playlistId, songId);
+            return new UpdatePlaylistPayload(success);
+        }
     }
 }

@@ -6,9 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DecodeHTMLPipe } from './decode-html.pipe';
 
 @NgModule({
-  declarations: [ConfirmDialogComponent],
+  declarations: [ConfirmDialogComponent, DecodeHTMLPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatDialogModule,
     ConfirmDialogComponent,
+    DecodeHTMLPipe,
   ],
 })
 export class SharedModule {}

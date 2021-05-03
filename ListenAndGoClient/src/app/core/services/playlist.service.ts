@@ -5,6 +5,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { Observable, ReplaySubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Song } from '../models/song.model';
 
 @Injectable()
 export class PlaylistService {
@@ -127,6 +128,7 @@ function GET_USER_PLAYLISTS(userId: number): DocumentNode {
           type
           path
           userId
+          imgUrl
         }
       }
     }
@@ -177,4 +179,20 @@ function UPDATE_PLAYLIST(playlist: Playlist): DocumentNode {
       }
     }
   `;
+}
+
+function ADD_SONG_TO_PLAYLIST(playlist: Playlist, song: Song): DocumentNode {
+  return gql`
+  mutation AddSongToPlaylist {
+    addSongToPlaylist(playlistId: ${playlist.id}, songInput: {
+      name: "${song.name}"
+      artist: "${song.artist}"
+      path: "${song.path}"
+      type: ${song.type}
+      releaseDate: "${song.releaseDate}"
+      userId: ${playlist.userId}
+    }) {
+      success
+    }
+  }`;
 }

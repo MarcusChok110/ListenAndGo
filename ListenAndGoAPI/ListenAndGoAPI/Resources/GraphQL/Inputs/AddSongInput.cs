@@ -10,7 +10,7 @@ namespace ListenAndGoAPI.Resources.GraphQL.Inputs
         string Artist,
         Song.SongType Type,
         string Path,
-        ICollection<Playlist> Playlists,
-        int UserId
+        int UserId,
+        string ImgUrl
     );
 }
