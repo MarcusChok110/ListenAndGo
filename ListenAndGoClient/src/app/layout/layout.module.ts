@@ -18,6 +18,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PlaylistModule } from '../playlist/playlist.module';
 import { FooterComponent } from './footer/footer.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { FooterQueueComponent } from './footer/footer-queue/footer-queue.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FooterPlayerComponent } from './footer/footer-player/footer-player.component';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -25,6 +30,8 @@ import { MatSliderModule } from '@angular/material/slider';
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
+    FooterQueueComponent,
+    FooterPlayerComponent,
   ],
   imports: [
     CDKLayoutModule,
@@ -42,6 +49,9 @@ import { MatSliderModule } from '@angular/material/slider';
     MatDialogModule,
     PlaylistModule,
     MatSliderModule,
+    MatTooltipModule,
+    DragDropModule,
+    YouTubePlayerModule,
   ],
   exports: [LayoutComponent],
 })
