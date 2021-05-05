@@ -8,17 +8,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { SearchSoundcloudComponent } from './search-soundcloud/search-soundcloud.component';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  declarations: [
-    SearchComponent,
-    SearchYoutubeComponent,
-    SearchSoundcloudComponent,
-  ],
+  declarations: [SearchComponent, SearchYoutubeComponent],
   imports: [
     SharedModule,
     CoreModule,
