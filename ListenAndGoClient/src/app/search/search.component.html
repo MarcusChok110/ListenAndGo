@@ -28,9 +28,7 @@
 <!-- tabs displaying data from each tab -->
 <mat-tab-group [(selectedIndex)]="selected">
   <mat-tab label="Youtube">
-    <app-search-youtube
-      [searchResults$]="youtubeService.searchResults$"
-    ></app-search-youtube>
+    <app-search-youtube></app-search-youtube>
   </mat-tab>
   <mat-tab label="Soundcloud">
     <app-search-soundcloud></app-search-soundcloud>
