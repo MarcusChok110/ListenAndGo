@@ -108,6 +108,40 @@ export class PlaylistService {
     this.playlistsSubject.next([]);
     this.userPlaylistsQuery = undefined;
   }
+
+  addSongToPlaylist(userId: number, playlist: Playlist, song: Song): void {
+    this.apollo
+      .mutate<any>({
+        mutation: ADD_SONG_TO_PLAYLIST(playlist, song),
+      })
+      .subscribe(({ data }) => {
+        if (data.addSongToPlaylist.success) {
+          this.fetchPlaylists(userId, 'Playlist updated successfully');
+          return;
+        }
+        this.snackBar.open('Song could not be added to playlist', 'CLOSE', {
+          duration: this.snackbarDuration,
+          horizontalPosition: 'start',
+        });
+      });
+  }
+
+  removeSongFromPlaylist(userId: number, playlist: Playlist, song: Song): void {
+    this.apollo
+      .mutate<any>({
+        mutation: REMOVE_SONG_FROM_PLAYLIST(playlist.id, song.id),
+      })
+      .subscribe(({ data }) => {
+        if (data.removeSongFromPlaylist.success) {
+          this.fetchPlaylists(userId, 'Playlist updated successfully');
+          return;
+        }
+        this.snackBar.open('Song could not be removed from playlist', 'CLOSE', {
+          duration: this.snackbarDuration,
+          horizontalPosition: 'start',
+        });
+      });
+  }
 }
 
 function GET_USER_PLAYLISTS(userId: number): DocumentNode {
@@ -190,9 +224,23 @@ function ADD_SONG_TO_PLAYLIST(playlist: Playlist, song: Song): DocumentNode {
       path: "${song.path}"
       type: ${song.type}
       releaseDate: "${song.releaseDate}"
+      imgUrl: "${song.imgUrl}"
       userId: ${playlist.userId}
     }) {
       success
     }
   }`;
+}
+
+function REMOVE_SONG_FROM_PLAYLIST(
+  playlistId: number,
+  songId: number
+): DocumentNode {
+  return gql`
+    mutation RemoveSongFromPlaylist {
+      removeSongFromPlaylist(playlistId: ${playlistId}, songId: ${songId}) {
+        success
+      }
+    }
+  `;
 }
