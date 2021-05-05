@@ -5,6 +5,7 @@ import { PlaylistFormComponent } from '../playlist-form/playlist-form.component'
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { PlaylistService } from '../../core/services/playlist.service';
 import { UserService } from '../../core/services/user.service';
+import { SongService } from '../../core/services/song.service';
 
 @Component({
   selector: 'app-playlist-card',
@@ -17,7 +18,8 @@ export class PlaylistCardComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private playlistService: PlaylistService,
-    private userService: UserService
+    private userService: UserService,
+    private songService: SongService
   ) {}
 
   ngOnInit(): void {}
@@ -50,5 +52,13 @@ export class PlaylistCardComponent implements OnInit {
         this.playlistService.deletePlaylist(userId, playlistId);
       }
     });
+  }
+
+  addSongsToQueue(): void {
+    if (this.playlist) {
+      for (const song of this.playlist.songs) {
+        this.songService.addToQueue(song);
+      }
+    }
   }
 }

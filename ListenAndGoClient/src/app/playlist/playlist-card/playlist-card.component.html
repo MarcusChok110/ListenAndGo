@@ -10,6 +10,14 @@
     <mat-card-subtitle>
       Created {{ playlist.dateCreated | date: "medium" }}
     </mat-card-subtitle>
+    <span class="spacer"></span>
+    <button
+      matTooltip="Add all songs to queue"
+      mat-icon-button
+      (click)="addSongsToQueue()"
+    >
+      <mat-icon>add_to_queue</mat-icon>
+    </button>
   </mat-card-header>
   <mat-card-content>
     <p class="playlist-description">
