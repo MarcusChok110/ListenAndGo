@@ -4,15 +4,26 @@
   bottom: 0;
 }
 
-.spacer {
-  flex: 1 1 auto;
+.controls-container {
+  display: flex;
+  flex: 1 1;
+  justify-content: flex-end;
 }
 
 .player-progress-container {
-  height: 1.5em;
-  padding-top: 0.75em;
+  height: 1.25em;
+  padding-top: 1em;
 }
 
 .player-progress-bar {
   width: 100%;
+}
+
+.main-player {
+  height: 4.5em;
+}
+
+.song-display {
+  flex: 1 1;
+  overflow: hidden;
 }

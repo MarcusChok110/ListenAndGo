@@ -4,13 +4,22 @@
       class="player-progress-bar"
       min="0"
       max="100"
-      step="0.5"
+      step="0.1"
     ></mat-slider>
   </mat-toolbar-row>
-  <mat-toolbar-row>
+  <mat-toolbar-row class="main-player">
     <!-- Empty button to push element to the middle -->
-    <button mat-icon-button></button>
-    <span class="spacer"></span>
+    <mat-list class="song-display">
+      <mat-list-item *ngIf="songService.currentSong as song">
+        <img
+          matListAvatar
+          [src]="song.imgUrl"
+          [alt]="song.name + 'Thumbnail'"
+        />
+        <h3 matLine>{{ song.name }}</h3>
+        <p matLine>{{ song.artist }}</p>
+      </mat-list-item>
+    </mat-list>
     <button mat-icon-button>
       <mat-icon>skip_previous</mat-icon>
     </button>
@@ -21,9 +30,11 @@
     <button mat-icon-button>
       <mat-icon>skip_next</mat-icon>
     </button>
-    <span class="spacer"></span>
-    <button mat-icon-button>
-      <mat-icon>queue_music</mat-icon>
-    </button>
+    <div class="controls-container">
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="openQueue()">
+        <mat-icon>queue_music</mat-icon>
+      </button>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
