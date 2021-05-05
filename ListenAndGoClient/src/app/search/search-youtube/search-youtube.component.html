@@ -1,7 +1,59 @@
-<div *ngIf="searchResults$ | async; let searchResults; else: noResults">
-  <pre>
-    {{ searchResults | json }}
-  </pre>
+<div
+  *ngIf="
+    youtubeService.searchResults$ | async;
+    let searchResults;
+    else: noResults
+  "
+>
+  <mat-list>
+    <div mat-subheader>Youtube Search Results</div>
+    <mat-list-item *ngFor="let item of searchResults.items">
+      <img
+        matListAvatar
+        [src]="item.snippet.thumbnails.default.url"
+        [alt]="item.snippet.title + ' Thumbnail'"
+      />
+      <h3 matLine>{{ item.snippet.title | decodeHTML }}</h3>
+      <p matLine>{{ item.snippet.channelTitle }}</p>
+      <button
+        matTooltip="Add to Queue"
+        mat-icon-button
+        (click)="onAddSongToQueue(item)"
+      >
+        <mat-icon>add_to_queue</mat-icon>
+      </button>
+      <button
+        matTooltip="Add to Playlist"
+        mat-icon-button
+        *ngIf="userService.isLoggedIn$ | async; else loggedOutBtn"
+        [matMenuTriggerFor]="addMenu"
+      >
+        <mat-icon>playlist_add</mat-icon>
+        <mat-menu #addMenu>
+          <button
+            mat-menu-item
+            *ngFor="let playlist of playlistService.playlists$ | async"
+            (click)="onAdd(item, playlist)"
+          >
+            {{ playlist.name }}
+          </button>
+        </mat-menu>
+      </button>
+      <ng-template #loggedOutBtn>
+        <button mat-icon-button (click)="onLoggedOutClick()">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+      </ng-template>
+    </mat-list-item>
+  </mat-list>
 </div>
 
-<ng-template #noResults>No search results</ng-template>
+<ng-template #noResults
+  ><mat-list>
+    <div mat-subheader>Youtube Search Results</div>
+    <mat-list-item>
+      <mat-icon mat-list-icon>error_outline</mat-icon>
+      <div mat-line>No search results</div>
+    </mat-list-item>
+  </mat-list></ng-template
+>
