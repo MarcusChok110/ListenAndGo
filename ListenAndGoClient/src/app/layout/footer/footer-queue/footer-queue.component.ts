@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SongService } from '../../../core/services/song.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Song } from '../../../core/models/song.model';
@@ -9,7 +9,11 @@ import { Song } from '../../../core/models/song.model';
   styleUrls: ['./footer-queue.component.scss'],
 })
 export class FooterQueueComponent implements OnInit {
-  constructor(public songService: SongService) {}
+  @Output() playEvent: EventEmitter<void>;
+
+  constructor(public songService: SongService) {
+    this.playEvent = new EventEmitter<void>();
+  }
 
   ngOnInit(): void {}
 
@@ -21,7 +25,8 @@ export class FooterQueueComponent implements OnInit {
     );
   }
 
-  playSong(song: Song, i: number): void {
-    this.songService.playSong(song, i);
+  playSong(song: Song): void {
+    this.songService.playSong(song);
+    this.playEvent.emit();
   }
 }

@@ -6,10 +6,7 @@
       cdkDropList
       (cdkDropListDropped)="drop($event)"
     >
-      <mat-list-item
-        *ngFor="let song of songService.songQueue; let i = index"
-        cdkDrag
-      >
+      <mat-list-item *ngFor="let song of songService.songQueue" cdkDrag>
         <mat-icon
           cdkDragHandle
           matTooltip="Reorder Songs"
@@ -29,11 +26,7 @@
         />
         <h3 matLine>{{ song.name }}</h3>
         <p matLine>{{ song.artist }}</p>
-        <button
-          matTooltip="Play Song"
-          mat-icon-button
-          (click)="playSong(song, i)"
-        >
+        <button matTooltip="Play Song" mat-icon-button (click)="playSong(song)">
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
