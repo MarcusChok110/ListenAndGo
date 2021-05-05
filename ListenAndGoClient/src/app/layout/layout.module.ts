@@ -21,7 +21,6 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FooterQueueComponent } from './footer/footer-queue/footer-queue.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { FooterPlayerComponent } from './footer/footer-player/footer-player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
@@ -31,7 +30,6 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     HeaderComponent,
     FooterComponent,
     FooterQueueComponent,
-    FooterPlayerComponent,
   ],
   imports: [
     CDKLayoutModule,
