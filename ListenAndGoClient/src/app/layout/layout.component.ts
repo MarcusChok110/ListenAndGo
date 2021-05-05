@@ -12,7 +12,6 @@ export class LayoutComponent implements OnInit {
   public routes = [
     { path: '', title: 'Home', icon: 'home' },
     { path: 'search', title: 'Search', icon: 'search' },
-    { path: 'explore', title: 'Explore', icon: 'explore' },
   ];
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
