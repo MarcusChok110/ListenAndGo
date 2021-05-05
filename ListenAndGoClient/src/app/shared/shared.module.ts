@@ -28,5 +28,6 @@ import { DecodeHTMLPipe } from './decode-html.pipe';
     ConfirmDialogComponent,
     DecodeHTMLPipe,
   ],
+  providers: [DecodeHTMLPipe], // for use in typescript
 })
 export class SharedModule {}
