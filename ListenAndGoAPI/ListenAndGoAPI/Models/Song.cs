@@ -38,7 +38,8 @@ namespace ListenAndGoAPI.Models
         {
             Youtube,
             Spotify,
-            Local
+            Local,
+            Soundcloud
         };
     }
 }

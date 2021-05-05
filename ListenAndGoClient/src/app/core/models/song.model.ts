@@ -14,4 +14,4 @@ export interface Song {
   imgUrl?: string;
 }
 
-export type SongType = 'YOUTUBE' | 'SPOTIFY' | 'LOCAL';
+export type SongType = 'YOUTUBE' | 'SPOTIFY' | 'LOCAL' | 'SOUNDCLOUD';
