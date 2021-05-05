@@ -11,7 +11,6 @@ using Newtonsoft.Json.Linq;
 
 namespace ListenAndGoAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class YoutubeController : ControllerBase
