@@ -7,7 +7,6 @@ export class SongService {
   public isLooping: boolean;
   public songQueue: Song[];
   public currentSong?: Song;
-  public currentSongIndex?: number;
 
   constructor() {
     this.isPlaying = false;
@@ -15,13 +14,66 @@ export class SongService {
     this.songQueue = [];
   }
 
-  playSong(song: Song, index: number): void {
-    this.currentSong = song;
-    this.currentSongIndex = index;
+  get currentSongIndex(): number | null {
+    for (const [i, song] of this.songQueue.entries()) {
+      if (song === this.currentSong) {
+        return i;
+      }
+    }
+    return null;
   }
 
-  togglePlaying(): void {
-    this.isPlaying = !this.isPlaying;
+  changeSong(song: Song): void {
+    this.currentSong = song;
+    this.isPlaying = false;
+  }
+
+  playSong(song: Song): void {
+    this.currentSong = song;
+    this.isPlaying = true;
+  }
+
+  playNextSong(): void {
+    if (this.currentSongIndex == null) {
+      return;
+    }
+
+    if (this.currentSongIndex < this.songQueue.length - 1) {
+      this.currentSong = this.songQueue[this.currentSongIndex + 1];
+      this.isPlaying = true;
+      return;
+    }
+
+    this.currentSong = this.songQueue[0];
+    this.isPlaying = false;
+  }
+
+  playPreviousSong(): void {
+    if (this.currentSongIndex == null) {
+      return;
+    }
+
+    if (this.currentSongIndex > 0) {
+      this.currentSong = this.songQueue[this.currentSongIndex - 1];
+      this.isPlaying = true;
+      return;
+    }
+
+    this.currentSong = this.songQueue[this.songQueue.length - 1];
+    this.isPlaying = false;
+  }
+
+  playCurrent(): void {
+    this.isPlaying = true;
+  }
+
+  pauseCurrent(): void {
+    this.isPlaying = false;
+  }
+
+  clearCurrent(): void {
+    this.currentSong = undefined;
+    this.isPlaying = false;
   }
 
   toggleLooping(): void {
