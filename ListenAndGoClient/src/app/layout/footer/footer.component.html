@@ -3,8 +3,12 @@
     <mat-slider
       class="player-progress-bar"
       min="0"
-      max="100"
+      [max]="songTotalTime"
       step="0.1"
+      [(value)]="songCurrentTime"
+      (input)="onSliderChange($event)"
+      thumbLabel
+      [displayWith]="formatLabel"
     ></mat-slider>
   </mat-toolbar-row>
   <mat-toolbar-row class="main-player">
@@ -20,21 +24,57 @@
         <p matLine>{{ song.artist }}</p>
       </mat-list-item>
     </mat-list>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="onSkipBackwards()">
       <mat-icon>skip_previous</mat-icon>
     </button>
-    <button mat-mini-fab color="basic" (click)="onTogglePlay()">
-      <mat-icon *ngIf="songService.isPlaying">pause</mat-icon>
-      <mat-icon *ngIf="!songService.isPlaying">play_arrow</mat-icon>
+    <button
+      mat-mini-fab
+      color="basic"
+      *ngIf="songService.isPlaying"
+      (click)="onPause()"
+    >
+      <mat-icon>pause</mat-icon>
     </button>
-    <button mat-icon-button>
+    <button
+      mat-mini-fab
+      color="basic"
+      *ngIf="!songService.isPlaying"
+      (click)="onPlay()"
+    >
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onSkipForwards()">
       <mat-icon>skip_next</mat-icon>
     </button>
     <div class="controls-container">
       <span class="spacer"></span>
-      <button mat-icon-button (click)="openQueue()">
+      <button
+        matTooltip="Open Queue"
+        matTooltipPosition="before"
+        mat-icon-button
+        (click)="openQueue()"
+      >
         <mat-icon>queue_music</mat-icon>
+      </button>
+      <button
+        matTooltip="Clear Current Song"
+        matTooltipPosition="before"
+        mat-icon-button
+        (click)="onClear()"
+      >
+        <mat-icon>clear</mat-icon>
       </button>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<div
+  *ngIf="songService.currentSong && songService.currentSong.type === 'YOUTUBE'"
+  style="display: none"
+>
+  <youtube-player
+    #player
+    [videoId]="songService.currentSong.path"
+    (stateChange)="onSongEnd($event)"
+  ></youtube-player>
+</div>
