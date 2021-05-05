@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>Song Queue</h2>
+<mat-dialog-content>
+  <mat-list>
+    <div
+      *ngIf="songService.songQueue.length > 0; else noSongMsg"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-list-item
+        *ngFor="let song of songService.songQueue; let i = index"
+        cdkDrag
+      >
+        <mat-icon
+          cdkDragHandle
+          matTooltip="Reorder Songs"
+          class="cursor-move"
+          mat-list-icon
+          >drag_indicator</mat-icon
+        >
+        <img
+          matListAvatar
+          [src]="song.imgUrl"
+          [alt]="song.name + ' Thumbnail'"
+        />
+        <img
+          *cdkDragPreview
+          [src]="song.imgUrl"
+          [alt]="song.name + ' Thumbnail'"
+        />
+        <h3 matLine>{{ song.name }}</h3>
+        <p matLine>{{ song.artist }}</p>
+        <button
+          matTooltip="Play Song"
+          mat-icon-button
+          (click)="playSong(song, i)"
+        >
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button
+          matTooltip="Remove from Queue"
+          mat-icon-button
+          (click)="songService.removeFromQueue(song)"
+        >
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-list-item>
+    </div>
+    <ng-template #noSongMsg>
+      <mat-list-item>
+        <h3 matLine>No songs are currently in queue</h3>
+        <p matLine>Add some songs to play!</p>
+      </mat-list-item>
+    </ng-template>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Close</button>
+  <button mat-stroked-button color="warn" (click)="songService.clearQueue()">
+    Clear
+  </button>
+</mat-dialog-actions>
