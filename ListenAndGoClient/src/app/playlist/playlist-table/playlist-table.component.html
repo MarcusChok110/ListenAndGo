@@ -1,22 +1,42 @@
-<mat-nav-list>
+<mat-list *ngIf="playlist && playlist.songs.length > 0; else noSongs">
   <div mat-subheader>Songs</div>
-  <div *ngIf="songs && songs.length > 0; else noSongs">
-    <cdk-virtual-scroll-viewport itemSize="50" class="songs-viewport">
-      <div *cdkVirtualFor="let song of songs">
-        <mat-list-item>
-          <mat-icon mat-list-icon>library_music</mat-icon>
-          <div mat-line>{{ song.name }}</div>
-          <div mat-line>{{ song.artist }}</div>
-        </mat-list-item>
-      </div>
-    </cdk-virtual-scroll-viewport>
-  </div>
-  <!-- Message for when playlist has no songs -->
-  <ng-template #noSongs>
+  <cdk-virtual-scroll-viewport itemSize="50" class="songs-viewport">
+    <div *cdkVirtualFor="let song of playlist.songs">
+      <mat-list-item>
+        <img
+          matListAvatar
+          *ngIf="song.imgUrl"
+          [src]="song.imgUrl"
+          [alt]="song.name + ' Thumbnail'"
+        />
+        <h3 matLine>{{ song.name }}</h3>
+        <p matLine>{{ song.artist }} - {{ song.type }}</p>
+        <button
+          (click)="songService.addToQueue(song)"
+          matTooltip="Add to Queue"
+          mat-icon-button
+        >
+          <mat-icon>add_to_queue</mat-icon>
+        </button>
+        <button
+          (click)="removeSongFromPlaylist(song)"
+          matTooltip="Delete from Playlist"
+          mat-icon-button
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</mat-list>
+
+<!-- Message for when playlist has no songs -->
+<ng-template #noSongs>
+  <mat-nav-list>
     <mat-list-item routerLink="/search">
       <mat-icon mat-list-icon>error_outline</mat-icon>
       <div mat-line>This playlist does not have any songs!</div>
       <div mat-line>Click here to search for songs to add this playlist!</div>
     </mat-list-item>
-  </ng-template>
-</mat-nav-list>
+  </mat-nav-list>
+</ng-template>
