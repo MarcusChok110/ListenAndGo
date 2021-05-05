@@ -2,7 +2,7 @@ import { User } from './user.model';
 import { Song } from './song.model';
 
 export interface Playlist {
-  id?: number;
+  id: number;
   name: string;
   description: string;
   dateCreated: string;
