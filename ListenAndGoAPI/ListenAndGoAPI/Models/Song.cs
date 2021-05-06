@@ -21,7 +21,7 @@ namespace ListenAndGoAPI.Models
         public string Artist { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(7)")]
+        [Column(TypeName = "varchar(10)")]
         public SongType Type { get; set; }
 
         [Required]
