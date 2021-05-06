@@ -1,0 +1,42 @@
+.container {
+  align-items: center;
+  justify-content: center;
+}
+
+.masthead {
+  min-height: 50vh;
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+.masthead h1 {
+  font-size: 4rem;
+}
+
+@media (min-width: 992px) {
+  .masthead {
+    height: 50vh;
+  }
+  .masthead h1 {
+    font-size: 5.5rem;
+  }
+}
+
+.display-flex {
+  display: flex;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.my-auto {
+  margin: auto;
+}
+
+.mb-1 {
+  margin-bottom: 1em;
+}
